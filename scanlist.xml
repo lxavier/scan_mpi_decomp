@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ******* COSMO 1 ******* -->
+
+<scanlist name="scan" type="cosmo1">
+  <description>COSMO-1 ref </description>
+  <executable>cosmo_gpu</executable>
+  <np_min>8</np_min>
+  <np_max>9</np_max>
+  <npxy_min>2</npxy_min>
+</scanlist>
+
