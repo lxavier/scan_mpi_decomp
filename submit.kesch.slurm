@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=cosmo-1
 #SBATCH --ntasks=?NTASKS?
-#SBATCH --ntasks-per-node=16
-#SBATCH --ntasks-per-socket=8
+#SBATCH --ntasks-per-node=17
+#SBATCH --ntasks-per-socket=9
 #SBATCH --output=test.out
 #SBATCH --gres=gpu:16
 #SBATCH --partition=production
 #SBATCH --account=s83                                            
 #SBATCH --time=00:20:00                                            
-
+#SBATCH --distribution=cyclic
 
 echo "print =========================================="
 echo "print SLURM_JOB_ID = $SLURM_JOB_ID"
@@ -19,22 +19,20 @@ echo "print =========================================="
 source /etc/bashrc
 source ./modules_fortran_kesch.env
 
-export LD_LIBRARY_PATH=${CRAY_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}:/opt/cray/lib64:/usr/lib64:/opt/local/slurm/default/lib64:/opt/cray/netcdf/4.3.2/CRAY/83/lib
-
-
-
 # Set this to avoid segmentation faults
 ulimit -s unlimited
 
 # set environmental parameters
+
 #export STELLA_DEBUG=42
 export OMP_NUM_THREADS=1
-export MV2_ENABLE_AFFINITY=0
-export MV2_USE_CUDA=1
 export MALLOC_MMAP_MAX_=0
 export MALLOC_TRIM_THRESHOLD_=536870912
 export G2G=1
+export MV2_USE_GPUDIRECT=0 #with this perf are ok
 export COSMO_NPROC_NODEVICE=?NPROCIO?
+export DYCORE_JSON_PERFORMANCE_REPORT=1
+
 
 # cleanup
 rm -f lm_fine_10min/* output/*
