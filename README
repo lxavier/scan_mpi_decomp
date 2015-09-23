@@ -1,0 +1,9 @@
+Contains script to run multiple configuration and get results.
+
+Example:
+- Run
+./scanscript.py --exe=cosmo_gpu --data_dir=./cosmo-1 --np_s=118 --np_e=150 --npxy_min=8 --ncomp_mult=16
+
+
+- Get results
+./get_scan_timing.py --scan_dir=work/cosmo-1 --sort
