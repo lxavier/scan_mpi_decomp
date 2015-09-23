@@ -91,14 +91,16 @@ def main():
     #get all infos
     for run_dir in list_run:
         os.chdir(run_dir)
-
         #get id from dir name
         l_runid.append(int(run_dir.split('run_')[1]))
    
         #check run success
         res=get_line(CLOG,"CLEAN UP")        
         if (len(res)==0):
-            sys.exit("Error :  %s file missing or run failed" %(os.getcwd()+'/'+CLOG))
+            print "!! Warning :  %s file missing or run failed, skipping this run" %(os.getcwd()+'/'+CLOG)
+            #back to scandir
+            os.chdir('..')            
+            continue
             
         #get config
         npx=int(get_param('INPUT_ORG','nprocx'))
@@ -113,23 +115,31 @@ def main():
         #get timing (last column in line containing time loop
         res=get_line(CLOG,"timeloop")
         if not res:
-            sys.exit("Error :  No timeloop keyword in log in %s" %(os.getcwd()+'/'+CLOG))
+            print "!!Warning :  No timeloop keyword in log in %s, skipping this run" %(os.getcwd()+'/'+CLOG)
+            #back to scandir
+            os.chdir('..')            
+            continue
+
         timeloop=res[0].split()
         timeloop=float(timeloop[5]) # assumes mean time on column 5     
         l_timeloop.append(timeloop)
 
         #get global timing (keyword Startime and EndTime) for slurm output
-        res=get_line(SLOG,"StartTime")
-        if not res:
-            sys.exit("Error :  No StartTime keyword in log in %s" %(os.getcwd()+'/'+SLOG))
-        stime=res[0].split()
-        stime=int(stime[1])
-        res=get_line(SLOG,"EndTime")
-        if not res:
-            sys.exit("Error :  No EndTime keyword in log in %s" %(os.getcwd()+'/'+SLOG))
-        etime=res[0].split()
-        etime=int(etime[1])
-        tot_time=etime-stime
+        if os.path.exists(SLOG):
+            res=get_line(SLOG,"StartTime")
+            if not res:
+                sys.exit("Error :  No StartTime keyword in log in %s" %(os.getcwd()+'/'+SLOG))
+            stime=res[0].split()
+            stime=int(stime[1])
+            res=get_line(SLOG,"EndTime")
+            if not res:
+                sys.exit("Error :  No EndTime keyword in log in %s" %(os.getcwd()+'/'+SLOG))
+            etime=res[0].split()
+            etime=int(etime[1])
+            tot_time=etime-stime
+        else:
+            print "!!Warning : missing %s, total time set to 0" %(os.getcwd()+'/'+SLOG)
+            tot_time=0
         l_tot_time.append(tot_time)
         #back to scandir
         os.chdir('..')
