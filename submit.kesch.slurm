@@ -17,6 +17,7 @@ echo "print =========================================="
 
 
 source /etc/bashrc
+module purge
 source ./modules_fortran_kesch.env
 
 # Set this to avoid segmentation faults
