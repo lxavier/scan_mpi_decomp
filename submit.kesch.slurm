@@ -36,8 +36,8 @@ export DYCORE_JSON_PERFORMANCE_REPORT=1
 
 
 # cleanup
-rm -f lm_fine_10min/* output/*
-mkdir -p lm_fine_10min/ output/
+rm -f lm_fine_10min/* output/* lm_cnmet/*  lm_coarse_10min/*
+mkdir -p lm_fine_10min/ output/ lm_cnmet/ lm_coarse_10min/
 
 # delete old YU files (required if job is requeued by scheduler)
 rm -f YU*
