@@ -1,0 +1,10 @@
+cosmo1_assml/
+cosmo_gpu
+default_values.pyc
+tools/sc_scan.pyc
+tools/ts_error.pyc
+tools/ts_fortran_nl.pyc
+tools/ts_logger.pyc
+tools/ts_utilities.pyc
+work/
+*~

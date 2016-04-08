@@ -4,9 +4,11 @@
 #SBATCH --ntasks-per-node=16
 #SBATCH --ntasks-per-socket=8
 #SBATCH --output=test.out
-#SBATCH --partition=normal
-#SBATCH --time=03:00:00
 #SBATCH --gres=gpu:16
+#SBATCH --partition=production
+#SBATCH --account=s83                                            
+#SBATCH --time=00:20:00                                            
+
 
 echo "print =========================================="
 echo "print SLURM_JOB_ID = $SLURM_JOB_ID"
