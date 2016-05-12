@@ -13,4 +13,4 @@ class DefaultValues:
     npxy_min = 2
     ncomp_mult=1
     data_dir = "cosmo1"
-    
+    ngpu_nodes=16

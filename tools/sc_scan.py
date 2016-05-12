@@ -143,12 +143,20 @@ class Scan:
         status = system_command('/bin/cp '+self.basedir+'/modules*'+' .', self.logger)
 
         #TODO : implement a better solution with proper handling of the submit script
-        #set number of tasks
+        #set number of tasks / nodes
         status = system_command('/bin/grep ?NTASKS? %s' %(self.options.submitscript), self.logger,False)
         if (status!=0):
             raise StopError('No keyword ?NTASKS? in %s' %(self.basedir+self.options.submitscript))
         status = system_command('/bin/sed -i s/?NTASKS?/%i/g %s' %(self.np,self.options.submitscript), \
                                 self.logger)
+        #set nodes
+        status = system_command('/bin/grep ?NODES? %s' %(self.options.submitscript), self.logger,False)
+        if (status!=0):
+            raise StopError('No keyword ?NODES? in %s' %(self.basedir+self.options.submitscript))
+        status = system_command('/bin/sed -i s/?NODES?/%i/g %s' %(self.np,self.options.submitscript), \
+                                self.logger)
+
+
         #set id to job name
         status = system_command('/bin/sed -i s/?ID?/%i/g %s' %(self.scanid,self.options.submitscript), \
                                 self.logger)

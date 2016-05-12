@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=cosmo-1
+#SBATCH --nodes=?NODES?
 #SBATCH --ntasks=?NTASKS?
 #SBATCH --ntasks-per-node=17
 #SBATCH --ntasks-per-socket=9
