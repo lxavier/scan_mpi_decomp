@@ -1,9 +1,30 @@
-Contains script to run multiple configuration and get results.
+# scan_mpi_decomp
+
+xavier.lapillonne@meteoswiss.ch
+Last edit: 12.05.2016
+
+Run cosmo with various mpi decomposition
+
+Contains script to run multiple configuration and get results. For a
+description of the command line options : ./scanscript.py -h
 
 Example:
 - Run
 ./scanscript.py --exe=cosmo_gpu --data_dir=./cosmo-1 --np_s=118 --np_e=150 --npxy_min=8 --ncomp_mult=16
 
+The runs will be performed in ./work/cosmo-1/run_[n]
 
 - Get results
 ./get_scan_timing.py --scan_dir=work/cosmo-1 --sort
+
+# Notes:
+- The number of I/O node will be kept to the value in data_dir/INPUT_ORG
+- On kesch one needs to manualy adapt the ntasks-per-node and ntasks-per-socket
+values in the submit.kesch.slurm:
+For 1 I/O task per node [ this is the default setting ]
+ #SBATCH --ntasks-per-node=17
+ #SBATCH --ntasks-per-socket=9
+For 2 I/O tasks per node [this may not work when using multiple
+node ]
+ #SBATCH --ntasks-per-node=18
+ #SBATCH --ntasks-per-socket=9
