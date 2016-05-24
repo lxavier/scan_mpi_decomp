@@ -1,12 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=cosmo-1
-#SBATCH --nodes=?NODES?
+#SBATCH --job-name=cosmo-7
 #SBATCH --ntasks=?NTASKS?
-#SBATCH --ntasks-per-node=17
+#SBATCH --ntasks-per-node=18
 #SBATCH --ntasks-per-socket=9
 #SBATCH --output=test.out
 #SBATCH --gres=gpu:16
-#SBATCH --partition=production
+#SBATCH --partition=dev
 #SBATCH --account=s83                                            
 #SBATCH --time=00:20:00                                            
 #SBATCH --distribution=cyclic
@@ -45,7 +44,7 @@ rm -f YU*
 
 echo '********** Start Run ********* '
 echo "StartTime: `date +%s` s"
-srun -K -u --ntasks=?NTASKS? ./cosmo_gpu >& exe.log
+srun -K -u --ntasks=?NTASKS? ./cosmo_gpu_float >& exe.log
 echo "EndTime: `date +%s` s"
 echo '********** End Run ********* '
 
